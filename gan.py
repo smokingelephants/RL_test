@@ -29,8 +29,9 @@ class GAN():
         self.discriminator = self.build_discriminator()
         def vae_loss(x, x_decoded_mean):
             xent_loss = objectives.binary_crossentropy(x, x_decoded_mean)
-            kl_loss = -0.5 * K.mean(1 + z_log_var - K.square(z_mean) - K.exp(z_log_var))
-            loss = xent_loss + kl_loss
+            #kl_loss = -0.5 * K.mean(1 + z_log_var - K.square(z_mean) - K.exp(z_log_var))
+            #loss = xent_loss + kl_loss
+            loss = xent_loss
             return loss
 
         self.discriminator.add_loss(vae_loss)
