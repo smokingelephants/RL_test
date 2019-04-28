@@ -40,7 +40,7 @@ class GAN():
         #    metrics=['accuracy'])
         self.discriminator.compile(loss=vae_loss,
             optimizer=optimizer)
-        self.discriminator.compile(optimizer=optimizer)
+        #self.discriminator.compile(optimizer=optimizer)
 
         # Build the generator
         self.generator = self.build_generator()
