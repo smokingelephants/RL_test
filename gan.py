@@ -7,7 +7,7 @@ from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.convolutional import UpSampling2D, Conv2D
 from keras.models import Sequential, Model
 from keras.optimizers import Adam
-
+from keras import backend as K
 import matplotlib.pyplot as plt
 
 import sys
@@ -26,6 +26,16 @@ class GAN():
 
         # Build and compile the discriminator
         self.discriminator = self.build_discriminator()
+        def vae_loss(x, x_decoded_mean):
+            xent_loss = objectives.binary_crossentropy(x, x_decoded_mean)
+            kl_loss = -0.5 * K.mean(1 + z_log_var - K.square(z_mean) - K.exp(z_log_var))
+            loss = xent_loss + kl_loss
+            return loss
+
+        self.discriminator.add_loss(vae_loss)
+        #self.discriminator.compile(loss='binary_crossentropy',
+        #    optimizer=optimizer,
+        #    metrics=['accuracy'])
         self.discriminator.compile(loss='binary_crossentropy',
             optimizer=optimizer,
             metrics=['accuracy'])
@@ -118,6 +128,8 @@ class GAN():
             gen_imgs = self.generator.predict(noise)
 
             # Train the discriminator
+            #d_loss_real = self.discriminator.train_on_batch(imgs, valid)
+            #d_loss_fake = self.discriminator.train_on_batch(gen_imgs, fake)
             d_loss_real = self.discriminator.train_on_batch(imgs, valid)
             d_loss_fake = self.discriminator.train_on_batch(gen_imgs, fake)
             d_loss = 0.5 * np.add(d_loss_real, d_loss_fake)
