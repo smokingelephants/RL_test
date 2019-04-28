@@ -34,7 +34,7 @@ class GAN():
             loss = xent_loss
             return loss
 
-        self.discriminator.add_loss(vae_loss)
+        #self.discriminator.add_loss(vae_loss)
         #self.discriminator.compile(loss='binary_crossentropy',
         #    optimizer=optimizer,
         #    metrics=['accuracy'])
