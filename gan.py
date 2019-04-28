@@ -10,6 +10,7 @@ from keras.optimizers import Adam
 from keras import backend as K
 import matplotlib.pyplot as plt
 
+from keras import objectives
 import sys
 
 import numpy as np
