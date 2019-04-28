@@ -36,6 +36,8 @@ class GAN():
         #self.discriminator.compile(loss='binary_crossentropy',
         #    optimizer=optimizer,
         #    metrics=['accuracy'])
+        self.discriminator.compile(loss=vae_loss,
+            optimizer=optimizer)
         self.discriminator.compile(optimizer=optimizer)
 
         # Build the generator
